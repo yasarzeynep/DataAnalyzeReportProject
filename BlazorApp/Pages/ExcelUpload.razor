@@ -1,0 +1,141 @@
+﻿@page "/excel-upload"
+@using Business
+@inject IExcelService ExcelService
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .upload-container {
+        text-align: center;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 120%; /* Sayfa genişliğini ayarlayabilirsiniz */
+    }
+
+    h3 {
+        color: #4caf50; /* Yeşil renk */
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .custom-upload-button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .custom-upload-button {
+        background-color: #4caf50;
+        color: #fff;
+        border: 2px solid #4caf50;
+        padding: 12px 24px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+        .custom-upload-button:hover {
+            background-color: #45a049; /* Hafifçe daha koyu yeşil */
+            border-color: #45a049;
+            color: #fff;
+        }
+
+    .result-window {
+        border: 2px solid #4caf50;
+        padding: 30px;
+        margin-top: 30px;
+        border-radius: 8px;
+    }
+
+    .result-message {
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #4caf50;
+    }
+
+    .error-window {
+        border: 2px solid #ff4444; /* Kırmızı renk */
+        padding: 15px;
+        margin-top: 20px;
+        border-radius: 8px;
+    }
+
+    .error-message {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #ff4444;
+    }
+
+    .file-name {
+        font-weight: bold;
+        color: #4caf50;
+    }
+</style>
+
+<div class="upload-container">
+    <h3>Upload Excel</h3>
+
+    <div class="form-group custom-upload-button-container">
+        <label for="fileInput">Choose Excel File:</label>
+        <InputFile id="fileInput" class="custom-upload-button" OnChange="HandleFileChange" />
+    </div>
+
+    @if (file != null)
+    {
+        <div class="result-window">
+            <p class="result-message">Uploaded File: <span class="file-name">@file.Name</span></p>
+
+            @if (!string.IsNullOrEmpty(analysisResult))
+            {
+                <div>
+                    <p class="result-message">Analysis Result:</p>
+                    <p>@analysisResult</p>
+                </div>
+            }
+            else
+            {
+                <div class="error-window">
+                    <p class="error-message">An error occurred during analysis. Please make sure you upload a valid Excel file.</p>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private IBrowserFile file;
+    private string analysisResult;
+
+    private async Task HandleFileChange(InputFileChangeEventArgs e)
+    {
+        file = e.File;
+
+        if (file != null)
+        {
+            var excelData = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(excelData);
+
+            analysisResult = await ExcelService.AnalyzeExcelFile(excelData);
+            StateHasChanged();
+        }
+    }
+}

@@ -1,0 +1,119 @@
+﻿@page "/link-analysis"
+@using Business
+@inject ILinkService LinkService
+
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .link-analysis-container {
+        text-align: center;
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%; /* Sayfa genişliğini ayarlayabilirsiniz */
+        
+    }
+
+    h3 {
+        color: #007bff; /* Mavi renk */
+        margin-bottom: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 15px;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 18px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        padding: 15px 30px;
+        cursor: pointer;
+        border-radius: 8px;
+        border: none;
+        font-size: 18px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Daha koyu mavi */
+            color: #fff;
+        }
+
+    .result-window {
+        border: 2px solid #007bff;
+        padding: 30px;
+        margin-top: 30px;
+        border-radius: 8px;
+        width: 100%; /* Ekran genişliği kadar genişletmek için */
+    }
+
+    .result-message {
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #007bff;
+    }
+</style>
+
+<div class="link-analysis-container">
+    <h3>Link Analysis</h3>
+
+    <div class="form-group">
+        <label for="linkInput">Link:</label>
+        <input id="linkInput" @bind="link" class="form-control" />
+    </div>
+
+    <button @onclick="AnalyzeLink" class="btn btn-primary">Analyze Link</button>
+
+    @if (!string.IsNullOrEmpty(analysisResult))
+    {
+        <div class="result-window">
+            <p class="result-message">Analysis Result:</p>
+            <p>@analysisResult</p>
+        </div>
+    }
+</div>
+
+@code {
+    private string link;
+    private string analysisResult;
+
+    private async Task AnalyzeLink()
+    {
+        // Link formatının kontrolü, uygunsa analizi yap
+        var isValidLink = LinkValidator.IsLinkValid(link);
+        if (isValidLink)
+        {
+            analysisResult = await LinkService.AnalyzeLinkContent(link);
+        }
+        else
+        {
+            analysisResult = "Invalid link format.";
+        }
+    }
+}
