@@ -7,7 +7,7 @@ Kullanıcı, Excel dosyasını yükleyerek veya bir bağlantıyı analiz ederek 
 
 ### Excel Upload İşlemi
 Kullanıcı, "Excel Upload" seçeneğini seçer.
-Blazor uygulaması, Excel dosyasını seçmek için bir dosya seçme düğmesi sunar.
+Blazor uygulaması, Excel dosyasını seçmek için bir dosya seçme butonu sunar.
 Kullanıcı, Excel dosyasını seçtikten sonra dosya, Blazor uygulamasına yüklenir.
 Uygulama, WebAPI'ya yüklenen Excel dosyasını ileterek analiz isteğini yapar.
 
