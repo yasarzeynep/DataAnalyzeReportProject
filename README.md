@@ -1,6 +1,11 @@
 # Data Analyze Report Projesi
 Bu proje, kullanıcının uygulamayı kullanarak Excel dosyalarındaki verileri analiz etmesini ve bağlantıların doğru olup olmadığını analizini sağlayan bir sistemdir.
 
+### Proje Görselleri 
+![Ekran görüntüsü 2024-07-16 152635](https://github.com/user-attachments/assets/50bfaed5-18bb-450d-8bff-2a1ee0a247de)
+![Ekran görüntüsü 2024-07-16 152723](https://github.com/user-attachments/assets/b7294aa1-8edd-4bfd-8c81-7fb406e8bcd0)
+![Ekran görüntüsü 2024-07-16 152747](https://github.com/user-attachments/assets/fbd180ba-e200-4d3b-839b-f931a89317a7)
+
 ### Kullanıcı Tarafı (Frontend)
 Ana sayfa, kullanıcıyı "Excel Upload" ve "Link Analysis" gibi seçeneklerle karşılar.
 Kullanıcı, Excel dosyasını yükleyerek veya bir bağlantıyı analiz ederek işlemlerini gerçekleştirir.
