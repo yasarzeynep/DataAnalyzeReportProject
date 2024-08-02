@@ -1,4 +1,4 @@
-# Data Analyze Report Projesi
+# Data Analyze Report
 Bu proje, kullanıcının uygulamayı kullanarak Excel dosyalarındaki verileri analiz etmesini ve bağlantıların doğru olup olmadığını analizini sağlayan bir sistemdir.
 
 ### Proje Görselleri 
